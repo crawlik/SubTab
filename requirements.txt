@@ -16,7 +16,6 @@ cached-property==1.5.2
 cachetools==4.2.1
 certifi==2020.12.5
 cffi==1.14.4
-chardet==4.0.0
 click==7.1.2
 cloudpickle==1.6.0
 cryptography==3.3.1
@@ -118,7 +117,6 @@ python-mnist==0.7
 pytorch-lightning==1.1.6
 pytz==2020.5
 PyWavelets==1.1.1
-PyYAML==5.4.1
 pyzmq==22.0.2
 qtconsole==5.0.2
 QtPy==1.9.0
@@ -151,13 +149,13 @@ texttable==1.6.3
 threadpoolctl==2.1.0
 tifffile==2021.1.14
 toml==0.10.2
-torch==1.5.0+cu101
+torch @ https://download.pytorch.org/whl/cu101/torch-1.5.0%2Bcu101-cp37-cp37m-linux_x86_64.whl
 torch-cluster @ https://pytorch-geometric.com/whl/torch-1.5.0/torch_cluster-1.5.7+cu101-cp37-cp37m-linux_x86_64.whl
 torch-geometric==1.6.3
 torch-scatter @ https://pytorch-geometric.com/whl/torch-1.5.0/torch_scatter-2.0.5+cu101-cp37-cp37m-linux_x86_64.whl
 torch-sparse @ https://pytorch-geometric.com/whl/torch-1.5.0/torch_sparse-latest+cu101-cp37-cp37m-linux_x86_64.whl
 torch-spline-conv @ https://pytorch-geometric.com/whl/torch-1.5.0/torch_spline_conv-latest+cu101-cp37-cp37m-linux_x86_64.whl
-torchvision==0.6.0+cu101
+torchvision @ https://download.pytorch.org/whl/cu101/torchvision-0.6.0%2Bcu101-cp37-cp37m-linux_x86_64.whl
 tornado==6.1
 tqdm==4.56.0
 traitlets==5.0.5

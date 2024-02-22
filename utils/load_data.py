@@ -15,7 +15,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from torch.utils.data import DataLoader
 from torch.utils.data import Dataset
-
+from sklearn.preprocessing import MinMaxScaler
 
 class Loader(object):
     """ Data loader """
@@ -109,6 +109,8 @@ class TabularDataset(Dataset):
 
         if self.dataset_name.lower() in ["mnist"]:
             x_train, y_train, x_test, y_test = self._load_mnist()
+        elif self.dataset_name.lower() in ["income"]: 
+            x_train, y_train, x_test, y_test = self._load_income()
         else:
             print(f"Given dataset name is not found. Check for typos, or missing condition "
                   f"in _load_data() of TabularDataset class in utils/load_data.py .")
@@ -129,7 +131,7 @@ class TabularDataset(Dataset):
         # validation data = training_data_ratio:(1-training_data_ratio)
         tr_idx = idx[:int(len(idx) * training_data_ratio)]
         val_idx = idx[int(len(idx) * training_data_ratio):]
-
+        
         # Validation data
         x_val = x_train[val_idx, :]
         y_val = y_train[val_idx]
@@ -140,6 +142,7 @@ class TabularDataset(Dataset):
 
         # Update number of classes in the config file in case that it is not correct.
         n_classes = len(list(set(y_train.reshape(-1, ).tolist())))
+        
         if self.config["n_classes"] != n_classes:
             self.config["n_classes"] = n_classes
             print(f"{50 * '>'} Number of classes changed "
@@ -187,4 +190,34 @@ class TabularDataset(Dataset):
         x_train = x_train.reshape(-1, 28 * 28) / 255.
         x_test = x_test.reshape(-1, 28 * 28) / 255.
 
+        return x_train, y_train, x_test, y_test
+    
+    
+    def _load_income(self):
+        """Loads Income dataset"""
+        self.data_path = os.path.join("./data/", "income")
+        
+        df = pd.read_csv(self.data_path + '/adult.data', header=None)
+        
+        # remove Holand-Netherlands from traiuning data set, becausde it is missing from test dataset
+        # it causes unequval number of columns after one-hot encoding leading to an out of index error eventually 
+        df = df.drop(df[df[13].isin([' Holand-Netherlands'])].index)
+        
+        scaler = MinMaxScaler()
+        
+        x_train = pd.get_dummies(df.iloc[:, :14], columns=[1,3,5,6,7,8,9,13], dtype=int)
+        scaler.fit(x_train)
+        x_train = scaler.transform(x_train)
+        
+        y_train = np.array(list(map(lambda x : int('<=50K' in x),  df.iloc[:, 14:][14])))
+
+        df = pd.read_csv(self.data_path + '/adult.test', header=None, skiprows=1)
+        x_test = pd.get_dummies(df.iloc[:, :14], columns=[1,3,5,6,7,8,9,13], dtype=int)
+        
+        scaler = MinMaxScaler()
+        scaler.fit(x_test)
+        x_test = scaler.transform(x_test)
+
+        y_test = np.array(list(map(lambda x : int('<=50K' in x),  df.iloc[:, 14:][14])))
+        
         return x_train, y_train, x_test, y_test

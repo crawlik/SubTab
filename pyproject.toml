@@ -1,3 +1,20 @@
+[project]
+name = "SubTab"
+description = ""
+requires-python = "==3.7.16"
+version = "0.1.0"
+dependencies = [
+    "torch @ https://download.pytorch.org/whl/cu101/torch-1.5.0%2Bcu101-cp37-cp37m-linux_x86_64.whl",
+    "torchvision @ https://download.pytorch.org/whl/cu101/torchvision-0.6.0%2Bcu101-cp37-cp37m-linux_x86_64.whl",
+    "torch-cluster @ https://pytorch-geometric.com/whl/torch-1.5.0/torch_cluster-1.5.7+cu101-cp37-cp37m-linux_x86_64.whl",
+    "torch-geometric==1.6.3",
+    "mlflow==1.13.1",
+    "protobuf",
+    "texttable==1.6.3",
+    "seaborn==0.11.1",
+    "datatable==0.11.1",
+]
+
 [tool.black]
 multi_line_output = 3
 include_trailing_comma = true
