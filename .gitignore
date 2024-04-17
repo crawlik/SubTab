@@ -20,6 +20,7 @@ results/*
 # All folders under /data, except the one provided for demo purposes, i.e. mnist
 data/*
 !data/mnist
+!data/income
 
 # Ignore tests to keep the repo clean
 tests/*
@@ -34,4 +35,5 @@ custom_scripts/*
 config/*
 !config/runtime.yaml
 !config/mnist.yaml
+!config/income.yaml
 
